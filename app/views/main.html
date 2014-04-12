@@ -1,33 +1,48 @@
 <div>
-
     <div class="sections-wrapper">
         <div class="sections {{step}}">
             <div class="section1">
-                    <ya-map ya-zoom="8" ya-center="[37.64,55.76]">
+                <div class="current-printer">
+                    <div class="info">
 
-                    </ya-map>
-                <select ng-model="printer">
-                    <option value="p.id" ng-repeat="p in printers">
-                        {{p.name}} <span ng-show="p.load > 0">(свободен через {{p.load}} мин.)</span>
-                    </option>
-                </select>
-                <div class="jumbotron">
-                    <h2>Перетяните файлы в эту область</h2>
-                        <span class="text-muted text-center">Или нажмите, чтобы выбрать</span>
-                    <div dropzone url="api/upload" callback="onFilesUploaded(job)" class="dropzone"></div>
+                        <h5 class="text-muted">Точка печати</h5>
+                        <p>
+                            {{printer.name}} <span ng-show="printer.load > 0" class="text-muted">(свободен через {{printer.load}} мин.)</span>
+                            <a href="" class="text-right text-primary" ng-click="isMapShown=!isMapShown" >Изменить</a>
+                        </p>
+                    </div>
+                    <div class="map-expander map-shown-{{isMapShown}}">
+                        <google-map center="map.center" draggable="true" zoom="map.zoom">
+                            <markers models='map.markers' coords="'self'" labelContent="'name'">
+                                <windows  ng-cloak ng-show="type!=0">
+                                    <p ng-non-bindable>{{name}}</p>
+                                    <p class="muted">Адрес точки печати</p>
+                                </windows>
+                            </markers>
+                        </google-map>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="drop-container">
+                        <div dropzone url="api/upload" callback="onFilesUploaded(job)" class="dropzone text-center">
+                            <h2>Перетяните файлы в эту область</h2>
+                            <span class="text-muted text-center">Или нажмите, чтобы выбрать</span>
+                        </div>
+                    </div>
 
                     <button class=" btn btn-lg btn-success" ng-click="goToDetails()">ПЕЧАТЬ</button>
                 </div>
             </div>
             <div class="section2">
+                <h2 class="text-primary">Файлы</h2>
                 <div class="files">
                     <ul>
-                        <li ng-repeat="file in currentJob.files">{{file.name}}</li>
+                        <li ng-repeat="file in currentJob.files">{{file.name}} ({{file.pages}} стр.)</li>
                     </ul>
                 </div>
-                asdsadhjlqkldwdwdjhwqldkjhwql
-                <div class="price">{{currentJob.price}} руб.</div>
-                <button class=" btn btn-lg btn-success" ng-click="confirmOrder()">ПЕЧАТЬ</button>
+
+                <div class="price text-right lead">Стоимость заказа: <span class="text-danger">{{currentJob.price}}</span> руб.</div>
+                <button class=" btn btn-lg btn-success float-right" ng-click="confirmOrder()">ПЕЧАТЬ</button>
             </div>
             <div class="section3">
                 Номер Вашего заказа: <span class="lead">{{currentJob.orderCode}}</span>
@@ -35,26 +50,9 @@
         </div>
     </div>
 
-    <div class="row marketing">
-        <h4>HTML5 Boilerplate</h4>
-
-        <p>
-            HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or
-            sites.
-        </p>
-
-        <h4>Angular</h4>
-
-        <p>
-            AngularJS is a toolset for building the framework most suited to your application development.
-        </p>
-
-        <h4>Karma</h4>
-
-        <p>Spectacular Test Runner for JavaScript.</p>
-    </div>
+    <button class="btn btn-lg btn-success" ng-click="login()">ЛОГИН</button>
 
     <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p><span class="glyphicon glyphicon-heart"></span> from the Qprint team</p>
     </div>
 </div>

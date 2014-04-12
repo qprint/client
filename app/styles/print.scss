@@ -1,24 +1,74 @@
 @import "mixins";
 
+$brand-primary:         #7CBDA1 !default;
+$brand-success:         #DA807D !default;
+$brand-info:            #F3C8B4 !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #d9534f !default;
+
+$dark-color: #383D40;
+$light-color: #F5F2F1;
+
+
 .angular-google-map-container { height: 400px; }
+.dropzone .dz-default.dz-message {
+  text-align: center;
+  background-image: url("../images/icons/upload3.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+}
+.dropzone{
+  background: $light-color;
+  border: none !important;
+  border-radius: 0;
+  top: 57%;
+
+  h2 {
+    color: $dark-color;
+  }
+}
+.current-printer{
+  background-color: $light-color;
+  border-radius: 10px;
+  margin-bottom: 2em;
+  .info{
+    padding: 10px 20px;
+  }
+}
+.drop-container{
+  margin-bottom: 2em;
+}
+.map-expander{
+  @include transition(height 0.3s);
+  height: 0;
+  overflow: hidden;
+}
+.map-shown-true{
+  height: 400px;
+
+}
 .sections-wrapper{
   overflow: hidden;
   width: 100%;
   height: 600px;
 }
 .sections{
+//  width: 300%;
+  position: relative;
   @include transition(transform 0.3s);
-  & > *{
+  & > * {
     position: absolute;
+    top:0;
+    left:0;
     width: 100%;
   }
   .section2{
-    left: 100%;
+    @include vendor(transform, translateX(100%));
   }
   .section3{
-    left: 200%;
+    @include vendor(transform, translateX(200%));
   }
-  width: 100%;
   height: 100%;
 }
 

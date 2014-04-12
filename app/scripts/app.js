@@ -6,7 +6,7 @@ angular
         'ngResource',
         'ngSanitize',
         'ngRoute',
-        'yaMap'
+        'google-maps'
     ])
     .config(function ($routeProvider, $httpProvider) {
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';

@@ -2,11 +2,23 @@ angular.module('qprintApp')
     .factory('Printer', ['$http', function($http){
         var service = {
             getPrinters: function(callback){
-//                $http.get('api/printer').success(callback);
-                callback([
-                    {id:1, name:'РИНХ', load: 60*4},
-                    {id:2, name: 'Призрак', load: 60*10}
-                ])
+                $http.get('api/printer').success(callback);
+//                callback([
+//                    {id:1, name:'РИНХ', load: 60*4, geometry: {
+//                        type: 'Point',
+//                        "latitude":47.2225077,
+//                        "longitude":39.71821769999997
+//                    },properties: {
+//                        balloonContent: 'РИНХ'
+//                    }},
+//                    {id:2, name: 'Призрак', load: 60*10,geometry: {
+//                        type: 'Point',
+//                        latitude: 37.8,
+//                        longitude: 55.85
+//                    },properties: {
+//                        balloonContent: 'Призрак'
+//                    }}
+//                ])
             }
         };
         return service;
@@ -14,16 +26,16 @@ angular.module('qprintApp')
     .factory('Job', ['$http', function($http){
         var service = {
             getJobs: function(callback){
-                $http.get('api/job/').success(callback);
+                $http.get('api/job').success(callback);
             },
             getJob: function(id, callback){
-                $http.get('api/job/' + id).success(callback);
+                $http.get('api/job' + id).success(callback);
             },
             updateJob: function(job, callback){
-                $http.post('api/job/' + job.id, job).success(callback);
+                $http.post('api/job' + job.id, job).success(callback);
             },
             getNotifications: function(callback){
-                $http.get('api/notification/').success(callback);
+                $http.get('api/notification').success(callback);
             },
             confirm: function(id, callback){
 //                $http.get('api/job/'+ id + '/print/').success(callback);
@@ -32,12 +44,20 @@ angular.module('qprintApp')
         };
         return service;
     }])
-    .factory('User', ['$http', function($http){
+    .factory('User', ['$http', function($http, $rootScope){
+        function httpserialize(object) {
+            var serialized_str = '';
+            for (key in object) {
+                serialized_str += key + '=' + object[key] + '&';
+            }
+            return serialized_str.slice(0, -1)
+        }
         var service = {
             login: function(cridentials, callback){
+                $http.post('api/login', httpserialize(cridentials)).success(callback);
             },
             getProfile: function(callback){
-                $http.get('api/profile/').success(callback);
+                $http.get('api/profile').success(callback);
             }
         };
         return service;

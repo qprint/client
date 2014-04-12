@@ -9,10 +9,11 @@ angular.module('qprintApp')
                 el.dropzone({
                     url: attrs.url,
                     maxFilesize: 5,
+                    dictDefaultMessage: "Перетяните файлы в эту область",
                     init: function() {
                         this.on('success', function(file, json) {
                             scope.$apply(function(){
-                                scope.callback({job: job});
+                                scope.callback({job: json});
                             });
                         });
                         this.on('error', function(file, json) {
@@ -24,7 +25,8 @@ angular.module('qprintApp')
 
                         });
                     }
-                })
+                });
+
             }
         }
     });
