@@ -30,14 +30,24 @@
     <div class="container">
         <div class="header">
             <ul class="nav nav-pills pull-right">
-                <li class="active"><a ng-href="/">Главная</a></li>
-                <li><a ng-href="/profile">Профиль</a></li>
-                <li><a ng-href="/about">О проекте</a></li>
+                <li class="active"><a ng-href="#/">Главная</a></li>
+                <li><a ng-href="#/profile">Профиль</a></li>
+                <li><a ng-href="#/about">О проекте</a></li>
             </ul>
             <h3 class="text-muted">Qprint</h3>
         </div>
 
         <div class="view" ng-view=""></div>
+    </div>
+
+    <div class="messages">
+        <div class="message" ng-repeat="message in messages">
+            <div class="close-button" ng-click="closeMessage(message)"></div>
+             <h3>{{message.status}}</h3>
+            <p>
+                {{message.text}}
+            </p>
+        </div>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -76,6 +86,7 @@
         <script src="scripts/common/resources.js"></script>
         <script src="scripts/common/directives.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
         <!-- endbuild -->
 </body>
 </html>

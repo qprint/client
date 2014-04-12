@@ -29,25 +29,27 @@ angular.module('qprintApp')
                 $http.get('api/job').success(callback);
             },
             getJob: function(id, callback){
-                $http.get('api/job' + id).success(callback);
+                $http.get('api/job/' + id).success(callback);
             },
             updateJob: function(job, callback){
-                $http.post('api/job' + job.id, job).success(callback);
+                $http.post('api/job/' + job.id, job).success(callback);
+            },
+            deleteJob: function(id, callback){
+                $http.delete('api/job/' + id).success(callback);
             },
             getNotifications: function(callback){
                 $http.get('api/notification').success(callback);
             },
             confirm: function(id, callback){
-//                $http.get('api/job/'+ id + '/print/').success(callback);
-                callback({});
+                $http.get('api/job/'+ id + '/confirm/').success(callback);
             }
         };
         return service;
     }])
-    .factory('User', ['$http', function($http, $rootScope){
+    .factory('User', ['$http', function($http){
         function httpserialize(object) {
             var serialized_str = '';
-            for (key in object) {
+            for (var key in object) {
                 serialized_str += key + '=' + object[key] + '&';
             }
             return serialized_str.slice(0, -1)
@@ -58,6 +60,9 @@ angular.module('qprintApp')
             },
             getProfile: function(callback){
                 $http.get('api/profile').success(callback);
+            },
+            updateBalance: function(balance, callback){
+                $http.post('api/profile', httpserialize({'balance': balance})).success(callback);
             }
         };
         return service;

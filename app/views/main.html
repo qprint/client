@@ -13,44 +13,46 @@
                     </div>
                     <div class="map-expander map-shown-{{isMapShown}}">
                         <google-map center="map.center" draggable="true" zoom="map.zoom">
-                            <markers models='map.markers' coords="'self'" labelContent="'name'">
-                                <windows  ng-cloak ng-show="type!=0">
-                                    <p ng-non-bindable>{{name}}</p>
-                                    <p class="muted">Адрес точки печати</p>
-                                </windows>
-                            </markers>
+                            <marker coords="map.currentLocation" labelContent="Ваше местоположение">
+
+                            </marker>
+                            <marker ng-repeat="m in map.markers" coords="m" icon="m.icon" click="onMarkerClicked(m)">
+                                <marker-label content="m.name" anchor="22 0"/>
+                                <window show="true" ng-cloak>
+                                    <p>This is an info window at {{ m.latitude | number:4 }}, {{ m.longitude | number:4 }}!</p>
+                                    <p class="muted">My marker will stay open when the window is popped up!</p>
+                                </window>
+                            </marker>
                         </google-map>
                     </div>
                 </div>
                 <div class="">
                     <div class="drop-container">
                         <div dropzone url="api/upload" callback="onFilesUploaded(job)" class="dropzone text-center">
-                            <h2>Перетяните файлы в эту область</h2>
+                            <h2>Перетащите файлы в эту область</h2>
                             <span class="text-muted text-center">Или нажмите, чтобы выбрать</span>
                         </div>
                     </div>
 
-                    <button class=" btn btn-lg btn-success" ng-click="goToDetails()">ПЕЧАТЬ</button>
                 </div>
             </div>
             <div class="section2">
                 <h2 class="text-primary">Файлы</h2>
                 <div class="files">
                     <ul>
-                        <li ng-repeat="file in currentJob.files">{{file.name}} ({{file.pages}} стр.)</li>
+                        <li>{{currentJob.file}} (5 стр.)</li>
                     </ul>
                 </div>
-
+                <div class="place text-right">Место печати: {{printer.name}}</div>
                 <div class="price text-right lead">Стоимость заказа: <span class="text-danger">{{currentJob.price}}</span> руб.</div>
                 <button class=" btn btn-lg btn-success float-right" ng-click="confirmOrder()">ПЕЧАТЬ</button>
             </div>
             <div class="section3">
-                Номер Вашего заказа: <span class="lead">{{currentJob.orderCode}}</span>
+                <h2>
+                Номер Вашего заказа:</h2> <h1><span class="lead">{{currentJob.order_code}}</span></h1>
             </div>
         </div>
     </div>
-
-    <button class="btn btn-lg btn-success" ng-click="login()">ЛОГИН</button>
 
     <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Qprint team</p>

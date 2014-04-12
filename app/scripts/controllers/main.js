@@ -1,22 +1,5 @@
 'use strict';
 
-
-var Geometry = {
-    rad : function(x) {
-        return x * Math.PI / 180;
-    },
-    getDistance : function(node1, node2) {
-        var R = 6378137; // Earth’s mean radius in meter
-        var dLat = Geometry.rad(node2.latitude - node1.latitude);
-        var dLong = Geometry.rad(node2.longitude - node1.longitude);
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(Geometry.rad(node1.latitude)) * Math.cos(Geometry.rad(node2.latitude)) *
-            Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c;
-        return d; // returns the distance in meter
-    }
-};
 angular.module('qprintApp')
     .config(function ($routeProvider) {
         $routeProvider
@@ -25,8 +8,7 @@ angular.module('qprintApp')
                 controller: 'MainCtrl'
             });
     })
-    .controller('MainCtrl', function ($scope, Printer, Job, User) {
-        var collection;
+    .controller('MainCtrl', function ($scope, $rootScope, Printer, Job, User, $location) {
         $scope.isMapShown = false;
 
         $scope.map = {
@@ -60,16 +42,6 @@ angular.module('qprintApp')
         }
 
         $scope.step = 'first';
-        $scope.currentJob = {
-            price: 31,
-            orderCode: 11312,
-            files:[{
-                name: 'qwerty.doc',
-                pages: 5,
-                copies: 1
-            }],
-            printerId: 1
-        };
 
         function getClosestPrinter(){
             var minDistance = Number.MAX_VALUE;
@@ -93,8 +65,8 @@ angular.module('qprintApp')
                 _.each(data, function(item){
                     item.load = Math.round(item.load/60);
                     item.type = 1;
-                    item.latitude = parseFloat(JSON.parse(item.address)[0]);
-                    item.longitude = parseFloat(JSON.parse(item.address)[1]);
+                    item.latitude = parseFloat(JSON.parse(item.location)[0]);
+                    item.longitude = parseFloat(JSON.parse(item.location)[1]);
                     item.showWindow = true;
                     item.type = 1;
                     item.load = item.id*2;
@@ -105,16 +77,22 @@ angular.module('qprintApp')
             });
         }
 
-//        getPrinters();
-
         $scope.onFilesUploaded = function(job){
-            alert(job);
-
-//            $scope.step = 'second';
+            alert(JSON.stringify(job));
+            $scope.currentJob = JSON.parse(job).data;
+            $scope.goToDetails();
         };
 
         $scope.goToDetails = function(){
             $scope.step = 'second';
+            $scope.currentJob.printer = $scope.printer;
+            Job.updateJob($scope.currentJob, function(data){
+
+            });
+        };
+
+        $scope.onMarkerClicked = function(m){
+            $scope.printer = m;
         };
 
         $scope.confirmOrder = function(){
@@ -123,8 +101,33 @@ angular.module('qprintApp')
             });
         };
 
+        $scope.cancelOrder = function(){
+          Job.deleteJob($scope.currentJob.id, function(){
+              $location.path('/');
+          })
+        };
+
         $scope.login = function (){
               User.login({username: 'test123', password:'123'}, function(){})
         };
 
+        $scope.login();
+
+
+        var Geometry = {
+            rad : function(x) {
+                return x * Math.PI / 180;
+            },
+            getDistance : function(node1, node2) {
+                var R = 6378137; // Earth’s mean radius in meter
+                var dLat = Geometry.rad(node2.latitude - node1.latitude);
+                var dLong = Geometry.rad(node2.longitude - node1.longitude);
+                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(Geometry.rad(node1.latitude)) * Math.cos(Geometry.rad(node2.latitude)) *
+                    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                var d = R * c;
+                return d; // returns the distance in meter
+            }
+        };
     });
