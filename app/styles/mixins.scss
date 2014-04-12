@@ -1,0 +1,149 @@
+
+/*
+VENDOR MIXIN
+Use:
+
+  .foo{
+  @include vendor(transition, all 0.3s ease-in-out );
+  }
+
+
+*/
+
+@mixin vendor($property, $value){
+  -webkit-#{$property}:$value;
+     -moz-#{$property}:$value;
+      -ms-#{$property}:$value;
+       -o-#{$property}:$value;
+          #{$property}:$value;
+}
+
+
+/*
+
+TRANSFORM-MIXIN
+Use:
+  .foo{
+  @include transform(0px, 100px);
+  }
+
+*/
+
+@mixin translate($value1, $value2){
+  -webkit-transform: translate($value1, $value2);
+     -moz-transform: translate($value1, $value2);
+       -o-transform: translate($value1, $value2);
+      -ms-transform: translate($value1, $value2);
+          transform: translate($value1, $value2);
+}
+
+
+
+
+// @include transition( all 0.3s ease-in-out );
+
+@function prefix($property, $prefixes: (webkit moz o ms)) {
+  $vendor-prefixed-properties: transform background-clip background-size;
+  $result: ();
+  @each $prefix in $prefixes {
+    @if index($vendor-prefixed-properties, $property) {
+      $property: -#{$prefix}-#{$property}
+    }
+    $result: append($result, $property);
+  }
+  @return $result;
+}
+
+@function trans-prefix($transition, $prefix: moz) {
+  $prefixed: ();
+  @each $trans in $transition {
+    $prop-name: nth($trans, 1);
+    $vendor-prop-name: prefix($prop-name, $prefix);
+    $prop-vals: nth($trans, 2);
+    $prefixed: append($prefixed, ($vendor-prop-name $prop-vals), comma);
+  }
+
+  @return $prefixed;
+}
+
+
+@mixin transition($values...) {
+  $transitions: ();
+  @each $declaration in $values {
+    $prop: nth($declaration, 1);
+    $prop-opts: ();
+    $length: length($declaration);
+    @for $i from 2 through $length {
+      $prop-opts: append($prop-opts, nth($declaration, $i));
+    }
+    $trans: ($prop, $prop-opts);
+    $transitions: append($transitions, $trans, comma);
+  }
+
+  -webkit-transition: trans-prefix($transitions, webkit);
+  -moz-transition: trans-prefix($transitions, moz);
+  -o-transition: trans-prefix($transitions, o);
+  transition: $values;
+}
+/*
+KEYFRAME
+Use:
+  @include keyframe(fadeout) {
+      0% {
+          opacity: 1;
+      }
+
+      100% {
+          opacity: 0;
+      }
+  }
+*/
+
+
+//@mixin keyframe ($animation_name) {
+//    @-webkit-keyframes $animation_name {
+//        @content;
+//    }
+//
+//    @-moz-keyframes $animation_name {
+//        @content;
+//    }
+//
+//    @-o-keyframes $animation_name {
+//        @content;
+//    }
+//
+//    @keyframes $animation_name {
+//        @content;
+//    }
+//}
+
+
+/*
+    ANIMATION
+    use:
+      .foo{
+      @include animation(8s, 4s, fadeout)
+      }
+ */
+@mixin animation ($delay, $duration, $animation) {
+    -webkit-animation-delay: $delay;
+    -webkit-animation-duration: $duration;
+    -webkit-animation-name: $animation;
+    -webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -moz-animation-delay: $delay;
+    -moz-animation-duration: $duration;
+    -moz-animation-name: $animation;
+    -moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -o-animation-delay: $delay;
+    -o-animation-duration: $duration;
+    -o-animation-name: $animation;
+    -o-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    animation-delay: $delay;
+    animation-duration: $duration;
+    animation-name: $animation;
+    animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+}

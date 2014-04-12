@@ -7,14 +7,19 @@
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <script src="//api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/dropzone/downloads/css/dropzone.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <link rel="stylesheet" href="styles/print.css">
+      <link rel="stylesheet" href="styles/dropzone.css">
+      <link rel="stylesheet" href="styles/map.css">
     <!-- endbuild -->
   </head>
   <body ng-app="qprintApp">
@@ -23,7 +28,18 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li class="active"><a ng-href="/">Главная</a></li>
+                <li><a ng-href="/profile">Профиль</a></li>
+                <li><a ng-href="/about">О проекте</a></li>
+            </ul>
+            <h3 class="text-muted">Qprint</h3>
+        </div>
+
+        <div class="view" ng-view=""></div>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -35,7 +51,7 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
@@ -50,11 +66,17 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/dropzone/downloads/dropzone.min.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-yandex-map/ya-map.min.js"></script>
+    <script src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/common/resources.js"></script>
+        <script src="scripts/common/directives.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <!-- endbuild -->
 </body>

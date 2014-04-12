@@ -5,9 +5,13 @@ angular
         'ngCookies',
         'ngResource',
         'ngSanitize',
-        'ngRoute'
+        'ngRoute',
+        'yaMap'
     ])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider, $httpProvider) {
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
         $routeProvider
             .otherwise({
                 redirectTo: '/'

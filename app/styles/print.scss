@@ -1,0 +1,33 @@
+@import "mixins";
+
+.angular-google-map-container { height: 400px; }
+.sections-wrapper{
+  overflow: hidden;
+  width: 100%;
+  height: 600px;
+}
+.sections{
+  @include transition(transform 0.3s);
+  & > *{
+    position: absolute;
+    width: 100%;
+  }
+  .section2{
+    left: 100%;
+  }
+  .section3{
+    left: 200%;
+  }
+  width: 100%;
+  height: 100%;
+}
+
+.sections.first{
+  @include vendor(transform, translateX(0));
+}
+.sections.second{
+  @include vendor(transform, translateX(-100%));
+}
+.sections.third{
+  @include vendor(transform, translateX(-200%));
+}

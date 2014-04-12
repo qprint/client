@@ -1,36 +1,60 @@
-<div class="header">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-  </ul>
-  <h3 class="text-muted">qprint</h3>
-</div>
+<div>
 
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+    <div class="sections-wrapper">
+        <div class="sections {{step}}">
+            <div class="section1">
+                    <ya-map ya-zoom="8" ya-center="[37.64,55.76]">
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+                    </ya-map>
+                <select ng-model="printer">
+                    <option value="p.id" ng-repeat="p in printers">
+                        {{p.name}} <span ng-show="p.load > 0">(свободен через {{p.load}} мин.)</span>
+                    </option>
+                </select>
+                <div class="jumbotron">
+                    <h2>Перетяните файлы в эту область</h2>
+                        <span class="text-muted text-center">Или нажмите, чтобы выбрать</span>
+                    <div dropzone url="api/upload" callback="onFilesUploaded(job)" class="dropzone"></div>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+                    <button class=" btn btn-lg btn-success" ng-click="goToDetails()">ПЕЧАТЬ</button>
+                </div>
+            </div>
+            <div class="section2">
+                <div class="files">
+                    <ul>
+                        <li ng-repeat="file in currentJob.files">{{file.name}}</li>
+                    </ul>
+                </div>
+                asdsadhjlqkldwdwdjhwqldkjhwql
+                <div class="price">{{currentJob.price}} руб.</div>
+                <button class=" btn btn-lg btn-success" ng-click="confirmOrder()">ПЕЧАТЬ</button>
+            </div>
+            <div class="section3">
+                Номер Вашего заказа: <span class="lead">{{currentJob.orderCode}}</span>
+            </div>
+        </div>
+    </div>
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
+    <div class="row marketing">
+        <h4>HTML5 Boilerplate</h4>
 
-<div class="footer">
-  <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p>
+            HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or
+            sites.
+        </p>
+
+        <h4>Angular</h4>
+
+        <p>
+            AngularJS is a toolset for building the framework most suited to your application development.
+        </p>
+
+        <h4>Karma</h4>
+
+        <p>Spectacular Test Runner for JavaScript.</p>
+    </div>
+
+    <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+    </div>
 </div>
