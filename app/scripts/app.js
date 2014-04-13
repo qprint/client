@@ -26,7 +26,20 @@ angular
             message.display = '';
             $rootScope.messages.splice($rootScope.messages.indexOf(message),1);
         };
-
+        $rootScope.setActivePage = function(page){
+            $rootScope.isMainActive = $rootScope.isProfileActive = $rootScope.isOrdersActive = '';
+            switch (page){
+                case 'main':
+                    $rootScope.isMainActive = 'current';
+                    break;
+                case 'profile':
+                    $rootScope.isProfileActive = 'current';
+                    break;
+                case 'orders':
+                    $rootScope.isOrdersActive = 'current';
+                    break;
+            }
+        };
         function ping(){
             Job.getNotifications(function(data){
                 _.each(data,function(item){

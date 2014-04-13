@@ -9,6 +9,7 @@ Use:
 
 
 */
+$mark-color: #83d3c9;
 
 @mixin vendor($property, $value){
   -webkit-#{$property}:$value;

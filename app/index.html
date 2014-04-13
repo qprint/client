@@ -9,6 +9,7 @@
     <meta name="description" content="">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <script src="//api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
@@ -19,36 +20,79 @@
       <link rel="stylesheet" href="styles/main.css">
       <link rel="stylesheet" href="styles/print.css">
       <link rel="stylesheet" href="styles/map.css">
+      <link rel="stylesheet" href="styles/orders.css">
+      <link rel="stylesheet" href="styles/twenty/skel.css" />
+      <link rel="stylesheet" href="styles/twenty/style.css" />
+      <link rel="stylesheet" href="styles/twenty/style-noscript.css" />
     <!-- endbuild -->
   </head>
-  <body ng-app="qprintApp">
+  <body  class="index" ng-app="qprintApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-        <div class="header">
-            <ul class="nav nav-pills pull-right">
-                <li class="active"><a ng-href="#/">Главная</a></li>
-                <li><a ng-href="#/profile">Профиль</a></li>
-                <li><a ng-href="#/about">О проекте</a></li>
+    <!-- Header -->
+    <header id="header" class="">
+        <h1 id="logo"><a href="index.html">Qprint <span>by enactus team</span></a></h1>
+        <nav id="nav">
+            <ul>
+                <li class="{{isMainActive}}"><a href="#/">Главная</a></li>
+                <li class="{{isOrdersActive}}"><a href="#/orders" >Заказы</a></li>
+                <li class="{{isProfileActive}}"><a href="#/profile" >Профиль</a></li>
             </ul>
-            <h3 class="text-muted">Qprint</h3>
-        </div>
+        </nav>
+    </header>
 
-        <div class="view" ng-view=""></div>
-    </div>
+    <!-- Banner -->
+    <section id="main">
+        <div class="container">
 
-    <div class="messages">
-        <div class="message" ng-repeat="message in messages">
-            <div class="close-button" ng-click="closeMessage(message)"></div>
-             <h3>{{message.status}}</h3>
-            <p>
-                {{message.text}}
-            </p>
+            <div class="view" ng-view=""></div>
         </div>
-    </div>
+        <!--
+            ".inner" is set up as an inline-block so it automatically expands
+            in both directions to fit whatever's inside it. This means it won't
+            automatically wrap lines, so be sure to use line breaks where
+            appropriate (<br />).
+        -->
+        <!--<div class="inner">-->
+            <!--<header>-->
+                <!--<h2>Qprint</h2>-->
+            <!--</header>-->
+            <!--<p>This is <strong>Qprint</strong>, a free<br />-->
+                <!--responsive template<br />-->
+                <!--by <a href="http://html5up.net">HTML5 UP</a>.</p>-->
+            <!--<footer>-->
+                <!--<ul class="buttons vertical">-->
+                    <!--<li><a href="#main" class="button fit scrolly">Tell Me More</a></li>-->
+                <!--</ul>-->
+            <!--</footer>-->
+        <!--</div>-->
+
+    </section>
+    <!--<!-- Add your site or application content here -->
+    <!--<div class="container">-->
+        <!--<div class="header">-->
+            <!--<ul class="nav nav-pills pull-right">-->
+                <!--<li class="active"><a ng-href="#/">Главная</a></li>-->
+                <!--<li><a ng-href="#/profile">Профиль</a></li>-->
+                <!--<li><a ng-href="#/about">О проекте</a></li>-->
+            <!--</ul>-->
+            <!--<h3 class="text-muted">Qprint</h3>-->
+        <!--</div>-->
+
+        <!--<div class="view" ng-view=""></div>-->
+    <!--</div>-->
+
+    <!--<div class="messages">-->
+        <!--<div class="message" ng-repeat="message in messages">-->
+            <!--<div class="close-button" ng-click="closeMessage(message)"></div>-->
+             <!--<h3>{{message.status}}</h3>-->
+            <!--<p>-->
+                <!--{{message.text}}-->
+            <!--</p>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -82,11 +126,17 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/layout/jquery.min.js"></script>
+        <script src="scripts/libraries/jquery.dropotron.min.js"></script>
+        <script src="scripts/layout/skel.min.js"></script>
+        <script src="scripts/layout/skel-layers.min.js"></script>
+        <script src="scripts/layout/init.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/common/resources.js"></script>
         <script src="scripts/common/directives.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/profile.js"></script>
+        <script src="scripts/controllers/orders.js"></script>
         <!-- endbuild -->
 </body>
 </html>

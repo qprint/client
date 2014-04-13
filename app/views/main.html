@@ -1,27 +1,29 @@
 <div>
     <div class="sections-wrapper">
-        <div class="sections {{step}}">
+        <div class="sections third">
             <div class="section1">
-                <div class="current-printer">
-                    <div class="info">
 
-                        <h5 class="text-muted">Точка печати</h5>
-                        <p>
+                <h2>Отправить на печать</h2>
+                <h4>Точка печати</h4>
+                <div class="current-printer">
+                    <div class="info" ng-click="isMapShown=!isMapShown">
+                        <div>
                             {{printer.name}} <span ng-show="printer.load > 0" class="text-muted">(свободен через {{printer.load}} мин.)</span>
-                            <a href="" class="text-right text-primary" ng-click="isMapShown=!isMapShown" >Изменить</a>
-                        </p>
+                            <!--<a href="" class="text-right text-primary"  >Изменить</a>-->
+                        </div>
                     </div>
                     <div class="map-expander map-shown-{{isMapShown}}">
                         <google-map center="map.center" draggable="true" zoom="map.zoom">
-                            <marker coords="map.currentLocation" labelContent="Ваше местоположение">
+                            <marker model="map.currentLocation" coords="map.currentLocation" >
+                                <marker-label content="m.name"/>
 
                             </marker>
                             <marker ng-repeat="m in map.markers" coords="m" icon="m.icon" click="onMarkerClicked(m)">
-                                <marker-label content="m.name" anchor="22 0"/>
-                                <window show="true" ng-cloak>
-                                    <p>This is an info window at {{ m.latitude | number:4 }}, {{ m.longitude | number:4 }}!</p>
-                                    <p class="muted">My marker will stay open when the window is popped up!</p>
-                                </window>
+                                <marker-label content="m.name"/>
+                                <!--<window show="true" ng-cloak>-->
+                                    <!--<p>This is an info window at {{ m.latitude | number:4 }}, {{ m.longitude | number:4 }}!</p>-->
+                                    <!--<p class="muted">My marker will stay open when the window is popped up!</p>-->
+                                <!--</window>-->
                             </marker>
                         </google-map>
                     </div>
@@ -37,24 +39,35 @@
                 </div>
             </div>
             <div class="section2">
-                <h2 class="text-primary">Файлы</h2>
+                <h2 class="">Файлы</h2>
                 <div class="files">
                     <ul>
-                        <li>{{currentJob.file}} (5 стр.)</li>
+                        <!--<li class="{{currentJob.fileExtension}}">{{currentJob.file}} ({{currentJob.pages_count}} стр.)</li>-->
+                        <li class="pdf">Something.pdf (5 стр.)</li>
+                        <li class="pdf">Something.pdf (5 стр.)</li>
                     </ul>
                 </div>
-                <div class="place text-right">Место печати: {{printer.name}}</div>
-                <div class="price text-right lead">Стоимость заказа: <span class="text-danger">{{currentJob.price}}</span> руб.</div>
-                <button class=" btn btn-lg btn-success float-right" ng-click="confirmOrder()">ПЕЧАТЬ</button>
+                <div class="clearfix">
+
+                    <div class="text-right">
+                        <div class="place text-right">Место печати: {{printer.name}}</div>
+                        <div class="text-right text-muted small">Стоимость 1 листа - 2 руб.</div>
+                        <p class="price lead">Стоимость заказа: <span class="text-danger large">{{currentJob.price}}</span> руб.</p>
+                    </div>
+                    <div class="button special pull-left print" ng-click="confirmOrder()">ПЕЧАТЬ</div>
+                    <a class="text-warning pull-left cancel" ng-click="cancelOrder()" href="">Отмена</a>
+                </div>
+
             </div>
-            <div class="section3">
-                <h2>
-                Номер Вашего заказа:</h2> <h1><span class="lead">{{currentJob.order_code}}</span></h1>
+            <div class="section3 text-center">
+                <h2> Номер Вашего заказа</h2>
+                <h1 class="big h1">132332</h1>
+                <p>
+                    Вы получите уведомление о выполнении
+                </p>
+                 <div class="button">На главную</div>
+                <!--<h1><span class="lead">{{currentJob.order_code}}</span></h1>-->
             </div>
         </div>
-    </div>
-
-    <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Qprint team</p>
     </div>
 </div>

@@ -12,29 +12,46 @@ $light-color: #F5F2F1;
 
 .angular-google-map-container { height: 400px; }
 .dropzone .dz-default.dz-message {
-  text-align: center;
   background-image: url("../images/icons/upload3.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom center;
+  margin-top: 0.3em;
 }
 .dropzone{
-  background: $light-color;
+//  background: $light-color;
   border: none !important;
   border-radius: 0;
   top: 57%;
+  text-align: center;
 
   h2 {
     color: $dark-color;
   }
 }
 .current-printer{
-  background-color: $light-color;
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #ebebeb;
   margin-bottom: 2em;
+  margin-top: -0.7em;
   .info{
+    cursor: pointer;
+    background: url('../images/icons/location.svg') no-repeat;
+    background-size: contain;
+    background-position: right center;
+    background-origin: content-box;
     padding: 10px 20px;
   }
+}
+.cancel{
+  margin-top: 0.5em;
+  text-decoration: none;
+  &:hover{
+    text-decoration: none;
+  }
+}
+.button.print{
+  margin-right: 2em;
 }
 .drop-container{
   margin-bottom: 2em;
@@ -47,6 +64,24 @@ $light-color: #F5F2F1;
 .map-shown-true{
   height: 400px;
 
+}
+
+.files{
+  ul{
+    margin-bottom: 1em;
+  }
+  li{
+    margin-bottom: 1em;
+  }
+  li:last-child{
+    margin-bottom: 0em;
+  }
+  li.pdf{
+    background: url('../images/icons/file-pdf.svg') no-repeat;
+    background-size: auto 100%;
+    background-position: left center;
+    padding-left: 45px;
+  }
 }
 .sections-wrapper{
   overflow: hidden;

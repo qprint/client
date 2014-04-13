@@ -3,7 +3,7 @@
   background-image: url("../../images/banner.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  -ms-behavior: url("css/ie/backgroundsize.min.htc"); }
+  -ms-behavior: url("/backgroundsize.min.htc"); }
   #banner .inner {
     background: #341b2b; }
 
@@ -12,4 +12,4 @@
   background-image: url("../../images/banner.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  -ms-behavior: url("css/ie/backgroundsize.min.htc"); }
+  -ms-behavior: url("/backgroundsize.min.htc"); }

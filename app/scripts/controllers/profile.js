@@ -11,11 +11,8 @@ angular.module('qprintApp')
                 controller: 'ProfileCtrl'
             });
     })
-    .controller('ProfileCtrl', function ($scope, Job, User, $location) {
-        Job.getJobs(function(data){
-            $scope.myOrders = data;
-        });
-
+    .controller('ProfileCtrl', function ($scope, $rootScope, Job, User, $location) {
+        $rootScope.setActivePage('profile');
         User.getProfile(function(data){
            $scope.profile = data;
         });

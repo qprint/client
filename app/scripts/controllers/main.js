@@ -8,7 +8,9 @@ angular.module('qprintApp')
                 controller: 'MainCtrl'
             });
     })
-    .controller('MainCtrl', function ($scope, $rootScope, Printer, Job, User, $location) {
+    .controller('MainCtrl', function ($scope, $rootScope, $route, Printer, Job, User, $location) {
+        $rootScope.setActivePage('main');
+
         $scope.isMapShown = false;
 
         $scope.map = {
@@ -25,14 +27,10 @@ angular.module('qprintApp')
                 var initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 
                 $scope.map.center = {latitude: initialLocation.lat(), longitude: initialLocation.lng()};
-                $scope.currentLocation = {latitude: initialLocation.lat(), longitude: initialLocation.lng()};
-                $scope.map.markers.push({
-                    latitude: initialLocation.lat(),
-                    longitude: initialLocation.lng(),
+                $scope.currentLocation = {latitude: initialLocation.lat(), longitude: initialLocation.lng(),
                     showWindow: false,
                     name: 'Ваше местоположение',
-                    type: 0
-                });
+                    type: 0};
 
 //                alert(JSON.stringify($scope.map.center));
                 getPrinters();
@@ -78,7 +76,7 @@ angular.module('qprintApp')
         }
 
         $scope.onFilesUploaded = function(job){
-            alert(JSON.stringify(job));
+//            alert(JSON.stringify(job));
             $scope.currentJob = JSON.parse(job).data;
             $scope.goToDetails();
         };
@@ -86,6 +84,7 @@ angular.module('qprintApp')
         $scope.goToDetails = function(){
             $scope.step = 'second';
             $scope.currentJob.printer = $scope.printer;
+            $scope.currentJob.fileExtension = getExtension($scope.currentJob.file);
             Job.updateJob($scope.currentJob, function(data){
 
             });
@@ -103,7 +102,7 @@ angular.module('qprintApp')
 
         $scope.cancelOrder = function(){
           Job.deleteJob($scope.currentJob.id, function(){
-              $location.path('/');
+              $route.reload();
           })
         };
 
@@ -113,6 +112,10 @@ angular.module('qprintApp')
 
         $scope.login();
 
+        function getExtension(filename) {
+            var parts = filename.split('.');
+            return parts[parts.length - 1];
+        }
 
         var Geometry = {
             rad : function(x) {
