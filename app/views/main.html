@@ -1,68 +1,79 @@
-<div>
-    <div class="sections-wrapper">
-        <div class="sections {{step}}">
-            <div class="section1">
+<div id="main">
+    <div class="container">
+        <div class="sections-wrapper">
+            <div class="sections {{step}}">
+                <div class="section1">
 
-                <h2>Отправить на печать</h2>
-                <h4>Точка печати</h4>
-                <div class="current-printer">
-                    <div class="info" ng-click="isMapShown=!isMapShown">
-                        <div>
-                            {{printer.name}} <span ng-show="printer.load > 0" class="text-muted">(свободен через {{printer.load}} мин.)</span>
-                            <!--<a href="" class="text-right text-primary"  >Изменить</a>-->
+                    <h2>Отправить на печать</h2>
+                    <h4>Точка печати</h4>
+
+                    <div class="current-printer">
+                        <div class="info" ng-click="isMapShown=!isMapShown">
+                            <div>
+                                {{printer.name}} <span ng-show="printer.load > 0" class="text-muted">(свободен через {{printer.load}} мин.)</span>
+                                <!--<a href="" class="text-right text-primary"  >Изменить</a>-->
+                            </div>
                         </div>
-                    </div>
-                    <div class="map-expander map-shown-{{isMapShown}}">
-                        <google-map center="map.center" draggable="true" zoom="map.zoom">
-                            <marker ng-repeat="m in map.markers" coords="m" icon="m.icon" click="onMarkerClicked(m)">
-                                <marker-label content="m.name" anchor="17 0" />
-                                <windows show="'true'" coords="m" closeClick="'closeClick'" ng-cloak>
+                        <div class="map-expander map-shown-{{isMapShown}}">
+                            <google-map center="map.center" draggable="true" zoom="map.zoom">
+                                <marker ng-repeat="m in map.markers" coords="m" icon="m.icon"
+                                        click="onMarkerClicked(m)">
+                                    <marker-label content="m.name" anchor="17 0"/>
+                                    <!--<windows show="'true'" coords="m" closeClick="'closeClick'" ng-cloak>-->
                                     <!--<p ng-non-bindable>This is an info window at {{ latitude | number:4 }}, {{ longitude | number:4 }}!</p>-->
-                                    <p class="muted">My marker will stay open when the window is popped up!</p>
-                                </windows>
-                            </marker>
-                        </google-map>
-                    </div>
-                </div>
-                <div class="">
-                    <div class="drop-container">
-                        <div dropzone url="api/upload" callback="onFilesUploaded(job)" class="dropzone text-center">
-                            <h2>Перетяните файлы в эту область</h2>
-                            <span class="text-muted text-center">Или нажмите, чтобы выбрать</span>
+                                    <!--<p class="muted">My marker will stay open when the window is popped up!</p>-->
+                                    <!--</windows>-->
+                                </marker>
+                            </google-map>
                         </div>
                     </div>
+                    <div class="">
+                        <div class="drop-container">
+                            <div dropzone url="api/upload" callback="onFilesUploaded(job)" class="dropzone text-center">
+                                <h2>Перетяните файлы в эту область</h2>
+                                <span class="text-muted text-center">Или нажмите, чтобы выбрать</span>
+                            </div>
+                        </div>
 
-                </div>
-            </div>
-            <div class="section2">
-                <h2 class="">Файлы</h2>
-                <div class="files">
-                    <ul>
-                        <li class="{{currentJob.fileExtension}}">{{currentJob.file}} ({{currentJob.pages_count}} стр.)</li>
-                        <!--<li class="pdf">Something.pdf (5 стр.)</li>-->
-                        <!--<li class="pdf">Something.pdf (5 стр.)</li>-->
-                    </ul>
-                </div>
-                <div class="clearfix">
-
-                    <div class="text-right">
-                        <div class="place text-right">Место печати: {{printer.name}}</div>
-                        <div class="text-right text-muted small">Стоимость 1 листа - 2 руб.</div>
-                        <div class="price lead">Стоимость заказа: <span class="text-danger large">{{currentJob.price}}</span> руб.</div>
                     </div>
-                    <div class="button special pull-left print" ng-click="confirmOrder()">ПЕЧАТЬ</div>
-                    <a class="text-warning pull-left cancel" ng-click="cancelOrder()" href="">Отмена</a>
                 </div>
+                <div class="section2">
+                    <h2 class="">Файлы</h2>
 
-            </div>
-            <div class="section3 text-center">
-                <h2> Номер Вашего заказа</h2>
-                <h1 class="big h1">132332</h1>
-                <div>
-                    Вы получите уведомление о выполнении
+                    <div class="files">
+                        <ul>
+                            <li class="{{currentJob.fileExtension}}">{{currentJob.file}} ({{currentJob.pages_count}}
+                                стр.)
+                            </li>
+                            <!--<li class="pdf">Something.pdf (5 стр.)</li>-->
+                            <!--<li class="pdf">Something.pdf (5 стр.)</li>-->
+                        </ul>
+                    </div>
+                    <div class="clearfix">
+
+                        <div class="text-right">
+                            <div class="place text-right">Место печати: {{printer.name}}</div>
+                            <div class="text-right text-muted small">Стоимость 1 листа - 2 руб.</div>
+                            <div class="price lead">Стоимость заказа: <span class="text-danger large">{{currentJob.price}}</span>
+                                руб.
+                            </div>
+                        </div>
+                        <div class="button special pull-left print" ng-click="confirmOrder()">ПЕЧАТЬ</div>
+                        <a class="text-warning pull-left cancel" ng-click="cancelOrder()" href="">Отмена</a>
+                    </div>
+
                 </div>
-                 <div class="button" ng-click="restart()">На главную</div>
-                <!--<h1><span class="lead">{{currentJob.order_code}}</span></h1>-->
+                <div class="section3 text-center">
+                    <h2> Номер Вашего заказа</h2>
+
+                    <h1 class="big h1">{{currentJob.order_code}}</h1>
+
+                    <div>
+                        Вы получите уведомление о выполнении
+                    </div>
+                    <div class="button" style="margin-top: 3em" ng-click="restart()">На главную</div>
+                    <!--<h1><span class="lead">{{currentJob.order_code}}</span></h1>-->
+                </div>
             </div>
         </div>
     </div>

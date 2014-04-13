@@ -20,35 +20,92 @@
       <link rel="stylesheet" href="styles/main.css">
       <link rel="stylesheet" href="styles/print.css">
       <link rel="stylesheet" href="styles/map.css">
+      <link rel="stylesheet" href="styles/message.css">
       <link rel="stylesheet" href="styles/orders.css">
       <link rel="stylesheet" href="styles/twenty/skel.css" />
       <link rel="stylesheet" href="styles/twenty/style.css" />
       <link rel="stylesheet" href="styles/twenty/style-noscript.css" />
     <!-- endbuild -->
   </head>
-  <body  class="index" ng-app="qprintApp">
+  <body  class="index loading" ng-app="qprintApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+
     <!-- Header -->
-    <header id="header" class="">
-        <h1 id="logo"><a href="index.html">Qprint <span>by enactus team</span></a></h1>
+    <header id="header" class="alt" ng-if="isHomeActive=='current'">
+        <h1 id="logo"><a href="#/">Qprint <span>by enactus team</span></a></h1>
         <nav id="nav">
             <ul>
-                <li class="{{isMainActive}}"><a href="#/">Главная</a></li>
+                <li class="current"><a href="#/signup">Регистрация</a></li>
+                <!--<li class="submenu">-->
+                <!--<a href="">Layouts</a>-->
+                <!--<ul>-->
+                <!--<li><a href="left-sidebar.html">Left Sidebar</a></li>-->
+                <!--<li><a href="right-sidebar.html">Right Sidebar</a></li>-->
+                <!--<li><a href="no-sidebar.html">No Sidebar</a></li>-->
+                <!--<li><a href="contact.html">Contact</a></li>-->
+                <!--<li class="submenu">-->
+                <!--<a href="">Submenu</a>-->
+                <!--<ul>-->
+                <!--<li><a href="#">Dolore Sed</a></li>-->
+                <!--<li><a href="#">Consequat</a></li>-->
+                <!--<li><a href="#">Lorem Magna</a></li>-->
+                <!--<li><a href="#">Sed Magna</a></li>-->
+                <!--<li><a href="#">Ipsum Nisl</a></li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <li><a href="#/login" class="button special">ВХОД</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Header -->
+    <header id="header" class="" ng-if="isHomeActive!='current'">
+        <h1 id="logo"><a href="#/">Qprint <span>by enactus team</span></a></h1>
+        <nav id="nav" ng-show="!isLoginActive">
+            <ul>
+                <li class="{{isMainActive}}"><a href="#/main">Главная</a></li>
                 <li class="{{isOrdersActive}}"><a href="#/orders" >Заказы</a></li>
                 <li class="{{isProfileActive}}"><a href="#/profile" >Профиль</a></li>
             </ul>
         </nav>
     </header>
 
+
     <!-- Banner -->
-    <section id="main">
-        <div class="container">
+    <section id="banner" ng-if="isHomeActive=='current'">
+
+        <!--
+            ".inner" is set up as an inline-block so it automatically expands
+            in both directions to fit whatever's inside it. This means it won't
+            automatically wrap lines, so be sure to use line breaks where
+            appropriate (<br />).
+        -->
+        <div class="inner">
+
+            <header>
+                <h2>Qprint</h2>
+            </header>
+            <p>This is <strong>Qprint</strong>, a free<br />
+                responsive template<br />
+                by <a href="http://html5up.net">HTML5 UP</a>.</p>
+            <footer>
+                <ul class="buttons vertical">
+                    <li><div class="button fit scrolly">Tell Me More</div></li>
+                </ul>
+            </footer>
+
+        </div>
+
+    </section>
+
+
 
             <div class="view" ng-view=""></div>
-        </div>
         <!--
             ".inner" is set up as an inline-block so it automatically expands
             in both directions to fit whatever's inside it. This means it won't
@@ -69,7 +126,6 @@
             <!--</footer>-->
         <!--</div>-->
 
-    </section>
     <!--<!-- Add your site or application content here -->
     <!--<div class="container">-->
         <!--<div class="header">-->
@@ -93,6 +149,14 @@
             <!--</p>-->
         <!--</div>-->
     <!--</div>-->
+    <div class='messages'>
+        <div  ng-repeat="message in messages" class='{{message.class}} message'>
+            <button type="button" class="close" aria-hidden="true" ng-click="closeMessage(message)">&times;</button>
+            <h4>Ваш заказ готов!</h4> <p>Заказ № <span class="big text-primary">{{message.order_code}}</span> был успешно напечатан. Вы можете забрать его из точки печати {{message.printer.name}} в удобное время.
+        </p>
+        </div>
+    </div>
+
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -135,7 +199,9 @@
         <script src="scripts/common/directives.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/profile.js"></script>
+        <script src="scripts/controllers/home.js"></script>
         <script src="scripts/controllers/orders.js"></script>
+        <script src="scripts/controllers/login.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -1,3 +1,10 @@
+function httpserialize(object) {
+    var serialized_str = '';
+    for (var key in object) {
+        serialized_str += key + '=' + object[key] + '&';
+    }
+    return serialized_str.slice(0, -1)
+}
 angular.module('qprintApp')
     .factory('Printer', ['$http', function($http){
         var service = {
@@ -32,7 +39,8 @@ angular.module('qprintApp')
                 $http.get('api/job/' + id).success(callback);
             },
             updateJob: function(job, callback){
-                $http.post('api/job/' + job.id, job).success(callback);
+                job.printer = job.printer.id;
+                $http.post('api/job/' + job.id, httpserialize(job)).success(callback);
             },
             deleteJob: function(id, callback){
                 $http.delete('api/job/' + id).success(callback);
@@ -47,16 +55,13 @@ angular.module('qprintApp')
         return service;
     }])
     .factory('User', ['$http', function($http){
-        function httpserialize(object) {
-            var serialized_str = '';
-            for (var key in object) {
-                serialized_str += key + '=' + object[key] + '&';
-            }
-            return serialized_str.slice(0, -1)
-        }
+
         var service = {
             login: function(cridentials, callback){
                 $http.post('api/login', httpserialize(cridentials)).success(callback);
+            },
+            register: function(cridentials, callback){
+                $http.post('api/register', httpserialize(cridentials)).success(callback);
             },
             getProfile: function(callback){
                 $http.get('api/profile').success(callback);

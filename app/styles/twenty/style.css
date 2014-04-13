@@ -810,14 +810,18 @@
 			}
 
 				#banner .inner p a {
-					color: inherit;
+					color: #ffffff;
 					font-weight: 400;
 					text-decoration: none;
 				}
+                    #banner .inner p a:hover {
+                        color: #ffffff !important;
+                    }
 
 			#banner .inner footer {
 				margin: 2em 0 0 0;
 			}
+
 
 /* Main */
 

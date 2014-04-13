@@ -15,13 +15,12 @@ angular.module('qprintApp')
         $rootScope.setActivePage('orders');
         Job.getJobs(function(data){
             var counter = 0;
-            data = data.slice(0, 5);
+//            data = data.slice(0, 5);
             _.each(data, function(item){
-                item.time = new Date(new Date().setHours(Math.round(Math.random()*12))).setMinutes(Math.round(Math.random()*60));
-                counter++;
+                item.time = new Date(item.datetime_queued * 1000 - (new Date()).getTimezoneOffset()*60000);
                 return item;
             });
-            $scope.myOrders = _.sortBy(data, function(item){ return item.time;});
+            $scope.myOrders = data;
         });
 
         $scope.increaseBalance = function(){

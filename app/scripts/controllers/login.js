@@ -6,8 +6,25 @@ angular.module('qprintApp')
             .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
+            })
+            .when('/signup', {
+                templateUrl: 'views/signup.html',
+                controller: 'LoginCtrl'
             });
     })
-    .controller('MainCtrl', function ($scope, $rootScope, Printer, Job, User) {
-
+    .controller('LoginCtrl', function ($scope, $location, $rootScope, Printer, Job, User) {
+        $rootScope.setActivePage('login');
+        $scope.user = {};
+        $scope.login = function(){
+            User.login($scope.user, function(){
+                $location.path('/main');
+            });
+        };
+        $scope.signUp = function(){
+            User.register($scope.user, function(){
+                User.login($scope.user, function(){
+                    $location.path('/main');
+                })
+            })
+        };
     });

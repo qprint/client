@@ -1,14 +1,15 @@
-<div>
-    <h2>Профиль пользователя</h2>
-    <div>
-        <span class="text-muted small">Имя</span>
-        <div class="lead big">{{profile.username}}</div>
-    </div>
-    <div>
+<div id="main">
+    <div class="container">
+        <h2>Профиль пользователя</h2>
+        <div>
+            <span class="text-muted small">Имя</span>
+            <div class="lead big">{{profile.username}}</div>
+        </div>
+        <div>
 
-        <span class="text-muted small">Баланс</span>
-    <div class="lead big">{{profile.balance}} рублей</div>
+            <span class="text-muted small">Баланс</span>
+        <div class="lead big">{{profile.balance}} рублей</div>
+        </div>
+        <div class="button special" ng-click="increaseBalance()">Пополнить баланс</div>
     </div>
-    <div class="button special" ng-click="increaseBalance()">Пополнить баланс</div>
-
 </div>

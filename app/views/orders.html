@@ -1,13 +1,16 @@
-<div>
-    <h2>Мои заказы</h2>
+<div id="main">
+    <div class="container">
+        <h2>Мои заказы</h2>
 
-    <ul class="orders">
-        <li ng-repeat="order in myOrders">
-            <span>{{order.time | date:'hh:mm dd.MM.yyyy'}}</span>
-            <div>{{order.file}}</div>
-            <div>Отправлено на печать</div>
-            <div>{{order.price}} руб.</div>
-            <div>{{order.order_code}}</div>
-        </li>
-    </ul>
+        <ul class="orders">
+            <li ng-repeat="order in myOrders">
+                <span class="time text-muted small">{{order.time | date:'HH:mm dd.MM.yyyy'}}</span>
+                <span class="file">{{order.file}}</span>
+
+                <div class="status">Отправлено на печать</div>
+                <div class="price">{{order.price}} руб.</div>
+                <div class="order-code">Код: {{order.order_code}}</div>
+            </li>
+        </ul>
+    </div>
 </div>

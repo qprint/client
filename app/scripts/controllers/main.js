@@ -3,7 +3,7 @@
 angular.module('qprintApp')
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {
+            .when('/main', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             });
@@ -39,25 +39,30 @@ angular.module('qprintApp')
                 });
 
             }, function() {
+                getPrinters();
 //                handleNoGeolocation(browserSupportFlag);
             });
+        } else{
+            getPrinters();
         }
 
         $scope.step = 'first';
 
         function getClosestPrinter(){
             var minDistance = Number.MAX_VALUE;
-            var closestPrinter = {};
-            _.each($scope.printers, function(item){
-                console.log(JSON.stringify(item));
-                var distance = Geometry.getDistance(item, $scope.currentLocation);
-                console.log(distance);
-                if(distance < minDistance){
-                    minDistance = distance;
-                    closestPrinter = item;
-                }
-            });
-            console.log(JSON.stringify(closestPrinter));
+            var closestPrinter;
+            if($scope.currentLocation){
+                _.each($scope.printers, function(item){
+                    console.log(JSON.stringify(item));
+                    var distance = Geometry.getDistance(item, $scope.currentLocation);
+                    console.log(distance);
+                    if(distance < minDistance){
+                        minDistance = distance;
+                        closestPrinter = item;
+                    }
+                });
+                console.log(JSON.stringify(closestPrinter));
+            }
             return closestPrinter;
         }
 
@@ -65,17 +70,17 @@ angular.module('qprintApp')
             Printer.getPrinters(function(data){
                 $scope.printers = data;
                 _.each(data, function(item){
-                    item.load = Math.round(item.load/60);
+                    item.load = Math.round(item.time_to_wait/60);
                     item.type = 1;
                     item.latitude = parseFloat(JSON.parse(item.location)[0]);
                     item.longitude = parseFloat(JSON.parse(item.location)[1]);
                     item.showWindow = true;
                     item.type = 1;
-                    item.load = item.id*2;
                     $scope.map.markers.push(item);
                     return item;
                 });
-                $scope.printer = getClosestPrinter();
+                $scope.printer = data[0];
+                $scope.printer = getClosestPrinter() || data[0];
             });
         }
 
@@ -112,12 +117,6 @@ angular.module('qprintApp')
               $route.reload();
           })
         };
-
-        $scope.login = function (){
-              User.login({username: 'test123', password:'123'}, function(){})
-        };
-
-        $scope.login();
 
         $scope.restart = function(){
             $route.reload();
