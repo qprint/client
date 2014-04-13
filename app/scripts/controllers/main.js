@@ -25,15 +25,19 @@ angular.module('qprintApp')
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-
                 $scope.map.center = {latitude: initialLocation.lat(), longitude: initialLocation.lng()};
-                $scope.currentLocation = {latitude: initialLocation.lat(), longitude: initialLocation.lng(),
-                    showWindow: false,
-                    name: 'Ваше местоположение',
-                    type: 0};
+                $scope.$apply(function(){
+                    $scope.currentLocation = {
+                        latitude: initialLocation.lat(),
+                        longitude: initialLocation.lng(),
+                        showWindow: false,
+                        name: 'Ваше местоположение',
+                        type: 0
+                    };
+                    $scope.map.markers.push($scope.currentLocation);
+                    getPrinters();
+                });
 
-//                alert(JSON.stringify($scope.map.center));
-                getPrinters();
             }, function() {
 //                handleNoGeolocation(browserSupportFlag);
             });
@@ -91,7 +95,10 @@ angular.module('qprintApp')
         };
 
         $scope.onMarkerClicked = function(m){
-            $scope.printer = m;
+            if(m != $scope.currentLocation){
+                m.showWindow = true;
+                $scope.printer = m;
+            }
         };
 
         $scope.confirmOrder = function(){
@@ -111,6 +118,10 @@ angular.module('qprintApp')
         };
 
         $scope.login();
+
+        $scope.restart = function(){
+            $route.reload();
+        };
 
         function getExtension(filename) {
             var parts = filename.split('.');
